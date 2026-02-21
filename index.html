@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joe Clare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #111110;
+    --surface: #1c1c1a;
+    --border: #2e2e2b;
+    --text: #f0ede6;
+    --muted: #6b6b66;
+    --subtle: #4a4a46;
+    --gv-green: #1a9b3c;
+    --gv-green-hover: #158332;
+    --apple-blue: #0071e3;
+    --apple-blue-hover: #0062c4;
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 48px 20px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    animation: fadeUp .8s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .hello {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    color: #a8a49c;
+    max-width: 380px;
+    line-height: 1.7;
+    margin: 0 auto 52px;
+  }
+
+  .contact-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp .8s .15s ease both;
+    opacity: 0;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    padding: 13px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn:active { transform: scale(0.97); }
+  .btn-email { background: var(--apple-blue); }
+  .btn-email:hover { background: var(--apple-blue-hover); }
+  .btn-call { background: var(--gv-green); }
+  .btn-call:hover { background: var(--gv-green-hover); }
+  .btn-icon { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 18px;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    animation: fadeUp .8s .3s ease both;
+    opacity: 0;
+    white-space: nowrap;
+  }
+
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color .2s;
+  }
+  footer a:hover { color: var(--text); }
+  footer .sep { margin: 0 8px; opacity: .4; }
+
+  /* ── MODALS ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.8);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px 32px;
+    max-width: 480px;
+    width: 100%;
+    animation: fadeUp .25s ease both;
+  }
+
+  .modal h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.8rem;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  .modal p {
+    font-size: 0.76rem;
+    color: #a8a49c;
+    line-height: 1.9;
+    margin-bottom: 14px;
+  }
+
+  .modal-close {
+    margin-top: 28px;
+    background: var(--border);
+    border: none;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 11px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .2s;
+    display: block;
+  }
+  .modal-close:hover { background: var(--subtle); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .btn { padding: 13px 20px; }
+    .modal { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Joe Clare<em>.</em></h1>
+  <p class="hello">Hello — welcome to my corner of the internet.</p>
+  <div class="contact-row">
+    <a class="btn btn-email" id="email-btn" href="#">
+      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="m2 7 10 7 10-7"/>
+      </svg>
+      Email Me
+    </a>
+    <a class="btn btn-call" href="tel:+17028615328">
+      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      Call Me
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2026 joeclare.com
+  <span class="sep">·</span>
+  <a id="privacy-link">Privacy</a>
+  <span class="sep">·</span>
+  <a id="terms-link">Terms</a>
+</footer>
+
+<!-- Privacy Modal -->
+<div class="modal-overlay" id="privacy-modal">
+  <div class="modal">
+    <h2>Privacy</h2>
+    <p>This website collects no personal data and uses no cookies or tracking of any kind.</p>
+    <p>Contact information you share by emailing or calling is used only to respond to your inquiry.</p>
+    <p>Nothing is sold, rented, or shared with third parties.</p>
+    <p>Questions? Reach out at joe@joeclare.com.</p>
+    <button class="modal-close" onclick="closeModal('privacy-modal')">Close</button>
+  </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal-overlay" id="terms-modal">
+  <div class="modal">
+    <h2>Terms</h2>
+    <p>This site is for informational and contact purposes only. Nothing here constitutes legal, financial, or investment advice.</p>
+    <p>All content is the property of Joe Clare and may not be reproduced without written permission.</p>
+    <p>These terms may change at any time. Continued use of the site means you accept the current terms.</p>
+    <p>Questions? Reach out at joe@joeclare.com.</p>
+    <button class="modal-close" onclick="closeModal('terms-modal')">Close</button>
+  </div>
+</div>
+
+<script>
+  // Email
+  document.getElementById('email-btn').addEventListener('click', e => {
+    e.preventDefault();
+    window.location.href = 'mailto:joe@joeclare.com';
+  });
+
+  // Modals
+  document.getElementById('privacy-link').addEventListener('click', () => openModal('privacy-modal'));
+  document.getElementById('terms-link').addEventListener('click', () => openModal('terms-modal'));
+
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
+  });
+</script>
+</body>
+</html>
