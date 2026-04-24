@@ -1,279 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Joe Clare</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vegas Fan Command Center</title>
+  <style>
+    :root {
+      --bg: #0a0f19;
+      --card: #141b2a;
+      --muted: #7f8ca8;
+      --text: #f4f8ff;
+      --accent: #ffc857;
+      --accent2: #45e0ff;
+      --ok: #3ee58b;
+      --border: #24314d;
+      --shadow: rgba(0, 0, 0, 0.38);
+    }
 
-  :root {
-    --bg: #111110;
-    --surface: #1c1c1a;
-    --border: #2e2e2b;
-    --text: #f0ede6;
-    --muted: #6b6b66;
-    --subtle: #4a4a46;
-    --gv-green: #1a9b3c;
-    --gv-green-hover: #158332;
-    --apple-blue: #0071e3;
-    --apple-blue-hover: #0062c4;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  html, body {
-    min-height: 100%;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-  }
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at top right, rgba(69, 224, 255, 0.14), transparent 40%),
+        radial-gradient(ellipse at top left, rgba(255, 200, 87, 0.12), transparent 40%),
+        var(--bg);
+      padding: 24px;
+    }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 48px 20px;
-  }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
 
-  /* ── HERO ── */
-  .hero {
-    text-align: center;
-    animation: fadeUp .8s ease both;
-  }
+    .hero,
+    .panel,
+    .tile {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent), var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 8px 22px var(--shadow);
+    }
 
-  .hero h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: clamp(3rem, 10vw, 5.5rem);
-    letter-spacing: -0.01em;
-    line-height: 1;
-    color: var(--text);
-    margin-bottom: 20px;
-  }
+    .hero {
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+    }
 
-  .hero h1 em {
-    font-style: italic;
-    color: var(--muted);
-  }
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      gap: 6px;
+      align-items: center;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      border: 1px solid rgba(255, 200, 87, 0.35);
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
 
-  .hello {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(1rem, 3vw, 1.2rem);
-    color: #a8a49c;
-    max-width: 380px;
-    line-height: 1.7;
-    margin: 0 auto 52px;
-  }
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+      line-height: 1.1;
+    }
 
-  .contact-row {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fadeUp .8s .15s ease both;
-    opacity: 0;
-  }
+    .sub {
+      color: var(--muted);
+      max-width: 78ch;
+      line-height: 1.55;
+    }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 400;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: #fff;
-    border: none;
-    padding: 13px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background .2s, transform .1s;
-    -webkit-tap-highlight-color: transparent;
-  }
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      color: #bfd0f5;
+      font-size: 14px;
+    }
 
-  .btn:active { transform: scale(0.97); }
-  .btn-email { background: var(--apple-blue); }
-  .btn-email:hover { background: var(--apple-blue-hover); }
-  .btn-call { background: var(--gv-green); }
-  .btn-call:hover { background: var(--gv-green-hover); }
-  .btn-icon { width: 14px; height: 14px; flex-shrink: 0; }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 0 6px rgba(62, 229, 139, 0.18);
+    }
 
-  /* ── FOOTER ── */
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    padding: 18px;
-    font-size: 0.62rem;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    animation: fadeUp .8s .3s ease both;
-    opacity: 0;
-    white-space: nowrap;
-  }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(270px, 350px) 1fr;
+      gap: 18px;
+    }
 
-  footer a {
-    color: var(--muted);
-    text-decoration: none;
-    cursor: pointer;
-    transition: color .2s;
-  }
-  footer a:hover { color: var(--text); }
-  footer .sep { margin: 0 8px; opacity: .4; }
+    .panel {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
 
-  /* ── MODALS ── */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.8);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    padding: 24px 20px;
-  }
-  .modal-overlay.open { display: flex; }
+    .panel h2 {
+      font-size: 1.1rem;
+      color: var(--accent2);
+    }
 
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 36px 32px;
-    max-width: 480px;
-    width: 100%;
-    animation: fadeUp .25s ease both;
-  }
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
 
-  .modal h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 1.8rem;
-    color: var(--text);
-    margin-bottom: 20px;
-  }
+    fieldset {
+      border: 0;
+      display: grid;
+      gap: 8px;
+    }
 
-  .modal p {
-    font-size: 0.76rem;
-    color: #a8a49c;
-    line-height: 1.9;
-    margin-bottom: 14px;
-  }
+    legend {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
 
-  .modal-close {
-    margin-top: 28px;
-    background: var(--border);
-    border: none;
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 11px 22px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background .2s;
-    display: block;
-  }
-  .modal-close:hover { background: var(--subtle); }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #dbe6ff;
+    }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+    input[type="checkbox"] {
+      accent-color: var(--accent2);
+    }
 
-  @media (max-width: 480px) {
-    .btn { padding: 13px 20px; }
-    .modal { padding: 28px 22px; }
-  }
-</style>
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      background: #0d1424;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px;
+      resize: vertical;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      color: #08111f;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), #ffd98f);
+      transition: transform 0.12s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      background: #101a31;
+      border: 1px solid #2a3a61;
+      border-radius: 999px;
+      color: #b5c7ee;
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      align-content: start;
+    }
+
+    .tile {
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+      text-decoration: none;
+      color: inherit;
+      border-left: 4px solid transparent;
+      transition: border-color 0.18s ease, transform 0.15s ease;
+    }
+
+    .tile:hover {
+      border-color: var(--accent2);
+      transform: translateY(-2px);
+    }
+
+    .tile .source {
+      color: var(--accent);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .tile h3 {
+      font-size: 1rem;
+      line-height: 1.3;
+    }
+
+    .tile p {
+      color: #b8c6e2;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .tile time {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .empty {
+      border: 1px dashed #365083;
+      border-radius: 12px;
+      padding: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 920px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow">🏟️ Vegas Fan Command Center</span>
+      <h1>The ultimate Vegas sports fan tool.</h1>
+      <p class="sub">
+        One dashboard for Raiders, Golden Knights, Aces, Aviators, and Rebels updates — plus an AI-style scout
+        that surfaces the freshest headlines and sends you out to primary sources in one click.
+      </p>
+      <div class="status-row">
+        <span class="dot"></span>
+        <span id="agentStatus">AI Scout active • scanning Vegas sports feeds...</span>
+      </div>
+      <div class="chips">
+        <span class="chip" id="refreshStamp">Last scan: --</span>
+        <span class="chip">Live external source links</span>
+        <span class="chip">Fan-needs prioritization</span>
+      </div>
+    </section>
 
-<section class="hero">
-  <h1>Joe Clare<em>.</em></h1>
-  <p class="hello">Hello — welcome to my corner of the internet.</p>
-  <div class="contact-row">
-    <a class="btn btn-email" id="email-btn" href="#">
-      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <rect x="2" y="4" width="20" height="16" rx="2"/>
-        <path d="m2 7 10 7 10-7"/>
-      </svg>
-      Email Me
-    </a>
-    <a class="btn btn-call" href="tel:+17028615328">
-      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-      </svg>
-      Call Me
-    </a>
-  </div>
-</section>
+    <section class="layout">
+      <aside class="panel">
+        <h2>What do fans need that they can’t get elsewhere?</h2>
+        <p class="small">
+          Tell the AI scout what matters most. It will prioritize that context above generic headlines.
+        </p>
 
-<footer>
-  © 2026 joeclare.com
-  <span class="sep">·</span>
-  <a id="privacy-link">Privacy</a>
-  <span class="sep">·</span>
-  <a id="terms-link">Terms</a>
-</footer>
+        <fieldset>
+          <legend>Choose what you want first:</legend>
+          <label><input type="checkbox" value="injuries" checked /> Injury + lineup updates fastest</label>
+          <label><input type="checkbox" value="odds" checked /> Smart odds + line movement context</label>
+          <label><input type="checkbox" value="tickets" /> Ticket value alerts + seating intel</label>
+          <label><input type="checkbox" value="tailgate" /> Tailgate + watch-party maps</label>
+          <label><input type="checkbox" value="insider" checked /> Local insider stories before national media</label>
+        </fieldset>
 
-<!-- Privacy Modal -->
-<div class="modal-overlay" id="privacy-modal">
-  <div class="modal">
-    <h2>Privacy</h2>
-    <p>This website collects no personal data and uses no cookies or tracking of any kind.</p>
-    <p>Contact information you share by emailing or calling is used only to respond to your inquiry.</p>
-    <p>Nothing is sold, rented, or shared with third parties.</p>
-    <p>Questions? Reach out at joe@joeclare.com.</p>
-    <button class="modal-close" onclick="closeModal('privacy-modal')">Close</button>
-  </div>
-</div>
+        <label for="fanNeed"><strong>Custom fan need:</strong></label>
+        <textarea id="fanNeed" placeholder="Example: I want real-time updates on any Raiders O-line injuries and quick links to beat reporters."></textarea>
 
-<!-- Terms Modal -->
-<div class="modal-overlay" id="terms-modal">
-  <div class="modal">
-    <h2>Terms</h2>
-    <p>This site is for informational and contact purposes only. Nothing here constitutes legal, financial, or investment advice.</p>
-    <p>All content is the property of Joe Clare and may not be reproduced without written permission.</p>
-    <p>These terms may change at any time. Continued use of the site means you accept the current terms.</p>
-    <p>Questions? Reach out at joe@joeclare.com.</p>
-    <button class="modal-close" onclick="closeModal('terms-modal')">Close</button>
-  </div>
-</div>
+        <button class="btn" id="applyPrefs">Apply fan priorities</button>
 
-<script>
-  // Email
-  document.getElementById('email-btn').addEventListener('click', e => {
-    e.preventDefault();
-    window.location.href = 'mailto:joe@joeclare.com';
-  });
+        <p class="small" id="prioritySummary">Current priorities: injuries, odds, insider.</p>
+      </aside>
 
-  // Modals
-  document.getElementById('privacy-link').addEventListener('click', () => openModal('privacy-modal'));
-  document.getElementById('terms-link').addEventListener('click', () => openModal('terms-modal'));
+      <section class="panel">
+        <h2>Latest AI scout findings</h2>
+        <p class="small">Tile/grid cards open external sources directly. Refresh runs every 10 minutes.</p>
+        <div class="grid" id="newsGrid"></div>
+      </section>
+    </section>
+  </main>
 
-  function openModal(id) {
-    document.getElementById(id).classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('open');
-    document.body.style.overflow = '';
-  }
+  <script>
+    const feedConfigs = [
+      {
+        name: 'Raiders',
+        url: 'https://news.google.com/rss/search?q=Las+Vegas+Raiders&hl=en-US&gl=US&ceid=US:en'
+      },
+      {
+        name: 'Golden Knights',
+        url: 'https://news.google.com/rss/search?q=Vegas+Golden+Knights&hl=en-US&gl=US&ceid=US:en'
+      },
+      {
+        name: 'Aces',
+        url: 'https://news.google.com/rss/search?q=Las+Vegas+Aces&hl=en-US&gl=US&ceid=US:en'
+      },
+      {
+        name: 'UNLV Rebels',
+        url: 'https://news.google.com/rss/search?q=UNLV+Rebels+sports&hl=en-US&gl=US&ceid=US:en'
+      }
+    ];
 
-  // Close on overlay click
-  document.querySelectorAll('.modal-overlay').forEach(el => {
-    el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
-  });
-</script>
+    const newsGrid = document.getElementById('newsGrid');
+    const refreshStamp = document.getElementById('refreshStamp');
+    const agentStatus = document.getElementById('agentStatus');
+    const prioritySummary = document.getElementById('prioritySummary');
+    const applyPrefsBtn = document.getElementById('applyPrefs');
+    const fanNeedText = document.getElementById('fanNeed');
+
+    function formatDate(dateString) {
+      const d = new Date(dateString);
+      if (Number.isNaN(d.getTime())) return 'Time unavailable';
+      return d.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+    }
+
+    function cardTemplate(item) {
+      return `
+        <a class="tile" href="${item.link}" target="_blank" rel="noopener noreferrer">
+          <span class="source">${item.team} • ${item.source}</span>
+          <h3>${item.title}</h3>
+          <p>${item.summary}</p>
+          <time>${formatDate(item.pubDate)}</time>
+        </a>
+      `;
+    }
+
+    function escapeHtml(str = '') {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function summarize(htmlText = '') {
+      const plain = htmlText.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      if (!plain) return 'Tap to open this source and read the full report.';
+      return `${plain.slice(0, 128)}${plain.length > 128 ? '…' : ''}`;
+    }
+
+    function getFanPriorities() {
+      const checks = [...document.querySelectorAll('input[type="checkbox"]:checked')].map((c) => c.value);
+      const custom = fanNeedText.value.trim();
+      return { checks, custom };
+    }
+
+    function renderPrioritySummary() {
+      const { checks, custom } = getFanPriorities();
+      const list = checks.length ? checks.join(', ') : 'none selected';
+      const customBit = custom ? ` | custom: ${custom}` : '';
+      prioritySummary.textContent = `Current priorities: ${list}${customBit}.`;
+    }
+
+    async function fetchFeed(feed) {
+      const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`;
+      const res = await fetch(apiUrl);
+      if (!res.ok) throw new Error(`Feed failed: ${feed.name}`);
+      const data = await res.json();
+      return (data.items || []).slice(0, 3).map((item) => ({
+        team: feed.name,
+        source: escapeHtml((item.author || data.feed?.title || 'Source').slice(0, 28)),
+        title: escapeHtml(item.title || 'Untitled update'),
+        summary: escapeHtml(summarize(item.description || item.content || '')),
+        pubDate: item.pubDate,
+        link: item.link || '#'
+      }));
+    }
+
+    function rankByFanNeeds(items) {
+      const { checks, custom } = getFanPriorities();
+      const terms = [...checks, ...custom.toLowerCase().split(/\W+/).filter(Boolean)];
+      if (!terms.length) return items;
+
+      return items
+        .map((item) => {
+          const haystack = `${item.title} ${item.summary}`.toLowerCase();
+          const score = terms.reduce((sum, t) => (haystack.includes(t) ? sum + 1 : sum), 0);
+          return { ...item, score };
+        })
+        .sort((a, b) => (b.score - a.score) || (new Date(b.pubDate) - new Date(a.pubDate)));
+    }
+
+    async function runScout() {
+      agentStatus.textContent = 'AI Scout active • scanning Vegas sports feeds...';
+      newsGrid.innerHTML = '<div class="empty">Gathering live reports from external sports sources...</div>';
+
+      try {
+        const settled = await Promise.allSettled(feedConfigs.map(fetchFeed));
+        let all = settled
+          .filter((r) => r.status === 'fulfilled')
+          .flatMap((r) => r.value)
+          .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+        if (!all.length) {
+          all = [
+            {
+              team: 'Command Center',
+              source: 'Fallback',
+              title: 'Live feeds are temporarily unavailable',
+              summary: 'Try again shortly. This dashboard will resume pulling live external links automatically.',
+              pubDate: new Date().toISOString(),
+              link: 'https://news.google.com/'
+            }
+          ];
+          agentStatus.textContent = 'AI Scout warning • live feeds not reachable, showing fallback.';
+        } else {
+          all = rankByFanNeeds(all).slice(0, 12);
+          agentStatus.textContent = `AI Scout active • ${all.length} curated updates ready.`;
+        }
+
+        newsGrid.innerHTML = all.map(cardTemplate).join('');
+        refreshStamp.textContent = `Last scan: ${new Date().toLocaleString()}`;
+      } catch (error) {
+        newsGrid.innerHTML = `
+          <div class="empty">
+            Could not load live data right now. Open <a href="https://news.google.com/" target="_blank" rel="noopener noreferrer">Google News</a> and retry.
+          </div>
+        `;
+        agentStatus.textContent = 'AI Scout error • unable to fetch latest updates.';
+      }
+    }
+
+    applyPrefsBtn.addEventListener('click', () => {
+      renderPrioritySummary();
+      runScout();
+    });
+
+    renderPrioritySummary();
+    runScout();
+    setInterval(runScout, 10 * 60 * 1000);
+  </script>
 </body>
 </html>
